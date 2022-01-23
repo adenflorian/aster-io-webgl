@@ -6,7 +6,8 @@
     "jsx": "react",
     "reactNamespace": "JSX",
     "allowJs": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "strict": true
   },
   "exclude": [
     "node_modules",
