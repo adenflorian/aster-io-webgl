@@ -1,6 +1,7 @@
 import { mat4 } from 'gl-matrix';
+import { Vector } from './excalibur/engine';
 
-export function drawScene(gl: WebGL2RenderingContext, programInfo: any, buffers: any) {
+export function clearScene(gl: WebGL2RenderingContext) {
   gl.clearColor(48 / 255, 48 / 255, 48 / 255, 1.0);  // Clear to black, fully opaque
   gl.clearDepth(1.0);                 // Clear everything
   gl.enable(gl.DEPTH_TEST);           // Enable depth testing
@@ -9,6 +10,9 @@ export function drawScene(gl: WebGL2RenderingContext, programInfo: any, buffers:
   // Clear the canvas before we start drawing on it.
 
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+}
+
+export function drawScene(gl: WebGL2RenderingContext, programInfo: any, buffers: any, translation: Vector, rotation: number) {
 
   // Create a perspective matrix, a special matrix that is
   // used to simulate the distortion of perspective in a camera.
@@ -40,7 +44,8 @@ export function drawScene(gl: WebGL2RenderingContext, programInfo: any, buffers:
 
   mat4.translate(modelViewMatrix,     // destination matrix
     modelViewMatrix,     // matrix to translate
-    [-0.0, 0.0, -6.0]);  // amount to translate
+    [translation.x, translation.y, -6.0]);  // amount to translate
+  mat4.rotateZ(modelViewMatrix, modelViewMatrix, rotation * (Math.PI * 2))
 
   // Tell WebGL how to pull out the positions from the position
   // buffer into the vertexPosition attribute.

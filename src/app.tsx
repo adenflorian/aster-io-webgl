@@ -2,10 +2,10 @@ import JSX from './custom-render'
 import { vec } from './excalibur/engine'
 import { initShaderProgram } from './shader-loading'
 import { fsSource, vsSource } from './shaders'
-import { drawScene } from './draw'
 import { initBuffers } from './buffers'
-import './app.css'
 import { NodeRef } from './NodeRef'
+import { Game, PlayerShip, PlayerShip2 } from './game'
+import './app.css'
 
 const canvasSize = vec(640, 480)
 
@@ -17,11 +17,11 @@ const app = (
   </div>
 ) as HTMLCanvasElement
 
-document.body.appendChild(<h1>s q u a r e</h1>)
+document.body.appendChild(<h1>s q u a r e <sup>2</sup></h1>)
 
 document.body.appendChild(app)
 
-const bottomText: HTMLHeadingElement = <h1>s q u a r e</h1>
+const bottomText: HTMLHeadingElement = <h1>s q u a r e <sup>2</sup></h1>
 
 document.body.appendChild(bottomText)
 
@@ -55,10 +55,12 @@ const programInfo = {
 
 const buffers = initBuffers(gl)
 
-drawScene(gl, programInfo, buffers)
+const game = new Game(gl, programInfo, buffers)
 
-function loop() {
-  requestAnimationFrame(loop)
-}
+const playerShip = new PlayerShip()
+const playerShip2 = new PlayerShip2()
 
-requestAnimationFrame(loop)
+game.add(playerShip)
+game.add(playerShip2)
+
+game.start()

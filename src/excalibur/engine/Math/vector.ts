@@ -394,6 +394,6 @@ export class Vector implements Clonable<Vector> {
  * @param x  X component of the Vector
  * @param y  Y component of the Vector
  */
-export function vec(x: number, y: number): Vector {
+export function vec(x: number = 0, y: number = 0): Vector {
   return new Vector(x, y);
 }
