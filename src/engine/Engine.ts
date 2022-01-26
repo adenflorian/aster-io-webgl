@@ -2,8 +2,8 @@ import { Actor } from './Actor'
 import { initBuffers } from './buffers'
 import { clearScene, drawScene } from './draw'
 import { initShaderProgram } from './shader-loading'
-import vsSource from './shaders/main_vert.glsl'
-import fsSource from './shaders/main_frag.glsl'
+import vsSource from './shaders/main_vert.vert'
+import fsSource from './shaders/main_frag.frag'
 
 export class Engine {
   private readonly actors = [] as Actor[]
