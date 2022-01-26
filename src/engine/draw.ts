@@ -1,5 +1,5 @@
 import { mat4 } from 'gl-matrix';
-import { Vector } from './excalibur/engine';
+import { Vector } from '../excalibur/engine';
 
 export function clearScene(gl: WebGL2RenderingContext) {
   gl.clearColor(48 / 255, 48 / 255, 48 / 255, 1.0);  // Clear to black, fully opaque
@@ -8,7 +8,6 @@ export function clearScene(gl: WebGL2RenderingContext) {
   gl.depthFunc(gl.LEQUAL);            // Near things obscure far things
 
   // Clear the canvas before we start drawing on it.
-
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 }
 
@@ -20,7 +19,6 @@ export function drawScene(gl: WebGL2RenderingContext, programInfo: any, buffers:
   // ratio that matches the display size of the canvas
   // and we only want to see objects between 0.1 units
   // and 100 units away from the camera.
-
   const fieldOfView = 45 * Math.PI / 180;   // in radians
   const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
   const zNear = 0.1;
@@ -90,11 +88,9 @@ export function drawScene(gl: WebGL2RenderingContext, programInfo: any, buffers:
   }
 
   // Tell WebGL to use our program when drawing
-
   gl.useProgram(programInfo.program);
 
   // Set the shader uniforms
-
   gl.uniformMatrix4fv(
     programInfo.uniformLocations.projectionMatrix,
     false,

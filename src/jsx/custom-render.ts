@@ -1,6 +1,4 @@
-import { NodeRef } from './NodeRef';
-
-export const JSX = {
+export default {
   createElement(tag, props, ...children) {
     if (typeof tag === "function") return tag(props, ...children);
     const element = isSvgTag(tag)
@@ -29,8 +27,6 @@ export const JSX = {
     return children
   }
 }
-
-export default JSX;
 
 function appendChild(parent, child) {
   if (Array.isArray(child))
