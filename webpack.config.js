@@ -27,7 +27,7 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.glsl$/,
+        test: /\.(vert|frag)$/,
         loader: 'webpack-glsl-loader'
       }
     ],
