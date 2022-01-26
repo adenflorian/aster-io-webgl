@@ -1,5 +1,5 @@
 export default {
-  createElement(tag, props, ...children) {
+  createElement(tag: keyof HTMLElementTagNameMap | Function, props: Object, ...children: any[]) {
     if (typeof tag === "function") return tag(props, ...children);
     const element = isSvgTag(tag)
       ? document.createElementNS('http://www.w3.org/2000/svg', tag)
@@ -23,18 +23,18 @@ export default {
 
     return element;
   },
-  createFragment(props, ...children) {
+  createFragment(props: Object, ...children: any[]) {
     return children
   }
 }
 
-function appendChild(parent, child) {
+function appendChild(parent: SVGElement | HTMLElement, child: any) {
   if (Array.isArray(child))
     child.forEach(nestedChild => appendChild(parent, nestedChild));
   else
     parent.appendChild(child.nodeType ? child : document.createTextNode(child));
 };
 
-function isSvgTag(tag) {
+function isSvgTag(tag: string) {
   return ['svg', 'path'].includes(tag)
 }

@@ -1,3 +1,3 @@
 export class NodeRef<T> {
-  public instance: T | null
+  public instance: T | null = null
 }

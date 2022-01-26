@@ -2,38 +2,38 @@ import { Actor } from './Actor'
 import { initBuffers } from './buffers'
 import { clearScene, drawScene } from './draw'
 import { initShaderProgram } from './shader-loading'
-import vsSource from './shaders/main_vert.vert'
-import fsSource from './shaders/main_frag.frag'
+import { Shaders } from './shaders'
 
 export class Engine {
-  private readonly actors = [] as Actor[]
-  private lastTimestamp: DOMHighResTimeStamp = 0
-  private readonly programInfo: any
-  private readonly buffers: any
+  private readonly _actors = [] as Actor[]
+  private _lastTimestamp: DOMHighResTimeStamp = 0
+  private readonly _programInfo: any
+  private readonly _buffers: any
+  public get gl() { return this._gl }
 
   public constructor(
-    private readonly gl: WebGL2RenderingContext,
+    private readonly _gl: WebGL2RenderingContext,
   ) {
 
-    const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
+    const shaderProgram = initShaderProgram(_gl, Shaders.mainVert, Shaders.mainFrag);
 
-    this.programInfo = {
+    this._programInfo = {
       program: shaderProgram,
       attribLocations: {
-        vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
-        vertexColor: gl.getAttribLocation(shaderProgram, 'aVertexColor'),
+        vertexPosition: _gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
+        vertexColor: _gl.getAttribLocation(shaderProgram, 'aVertexColor'),
       },
       uniformLocations: {
-        projectionMatrix: gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
-        modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
+        projectionMatrix: _gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
+        modelViewMatrix: _gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
       },
     };
 
-    this.buffers = initBuffers(gl)
+    this._buffers = initBuffers(_gl)
   }
 
   public readonly add = (actor: Actor) => {
-    this.actors.push(actor)
+    this._actors.push(actor)
   }
 
   public readonly start = () => {
@@ -41,15 +41,15 @@ export class Engine {
   }
 
   public readonly loop = (timestamp: DOMHighResTimeStamp) => {
-    const delta = timestamp - this.lastTimestamp
-    this.lastTimestamp = timestamp
+    const delta = timestamp - this._lastTimestamp
+    this._lastTimestamp = timestamp
     this.update(delta / 1000)
     requestAnimationFrame(this.loop)
   }
 
   public readonly update = (delta: number) => {
-    this.actors.forEach(x => x.onUpdate(this, delta))
-    clearScene(this.gl)
-    this.actors.forEach(x => drawScene(this.gl, this.programInfo, this.buffers, x.pos, x.rotation))
+    this._actors.forEach(x => x.onUpdate(this, delta))
+    clearScene(this._gl)
+    this._actors.forEach(x => drawScene(this._gl, this._programInfo, this._buffers, x.pos, x.rotation))
   }
 }

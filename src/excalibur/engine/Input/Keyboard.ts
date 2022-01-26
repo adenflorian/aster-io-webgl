@@ -204,11 +204,11 @@ export class Keyboard {
         const noop = () => {
           return;
         };
-        window.top.addEventListener('blur', noop);
-        window.top.removeEventListener('blur', noop);
+        window.top!.addEventListener('blur', noop);
+        window.top!.removeEventListener('blur', noop);
 
         // this will be the same as window if not embedded within an iframe
-        global = window.top;
+        global = window.top as any;
       } catch {
         // fallback to current frame
         global = window;
@@ -220,12 +220,12 @@ export class Keyboard {
       }
     }
 
-    global.addEventListener('blur', () => {
+    global!.addEventListener('blur', () => {
       this._keys.length = 0; // empties array efficiently
     });
 
     // key up is on window because canvas cannot have focus
-    global.addEventListener('keyup', (ev: KeyboardEvent) => {
+    global!.addEventListener('keyup', (ev: KeyboardEvent) => {
       const code = ev.code as Keys;
       const key = this._keys.indexOf(code);
       this._keys.splice(key, 1);
@@ -233,7 +233,7 @@ export class Keyboard {
     });
 
     // key down is on window because canvas cannot have focus
-    global.addEventListener('keydown', (ev: KeyboardEvent) => {
+    global!.addEventListener('keydown', (ev: KeyboardEvent) => {
       const code = ev.code as Keys;
       if (this._keys.indexOf(code) === -1) {
         this._keys.push(code);

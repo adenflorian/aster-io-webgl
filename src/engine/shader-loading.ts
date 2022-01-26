@@ -1,9 +1,12 @@
 //
 // Initialize a shader program, so WebGL knows how to draw our data
+
+import { FragmentShader, VertexShader } from './shaders';
+
 //
-export function initShaderProgram(gl: WebGL2RenderingContext, vsSource: string, fsSource: string) {
-  const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
-  const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
+export function initShaderProgram(gl: WebGL2RenderingContext, vsSource: VertexShader, fsSource: FragmentShader) {
+  const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource as string);
+  const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource as string);
 
   if (!vertexShader) throw new Error('vertexShader null')
   if (!fragmentShader) throw new Error('fragmentShader null')

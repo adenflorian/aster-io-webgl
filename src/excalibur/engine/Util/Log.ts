@@ -46,7 +46,7 @@ export enum LogLevel {
  * Derive from [[Appender]] to create your own logging appenders.
  */
 export class Logger {
-  private static _INSTANCE: Logger = null;
+  private static _INSTANCE: Logger | null = null;
   private _appenders: Appender[] = [];
 
   constructor() {
@@ -172,6 +172,7 @@ export class ConsoleAppender implements Appender {
    */
   public log(level: LogLevel, args: any[]): void {
     // Check for console support
+    // @ts-ignore
     if (!console && !console.log && console.warn && console.error) {
       // todo maybe do something better than nothing
       return;

@@ -1,7 +1,7 @@
 import { Engine } from '../engine/Engine'
 import { PlayerShip, PlayerShip2 } from './PlayerShip'
 
-export function startGame(gl) {
+export function startGame(gl: WebGL2RenderingContext) {
 
   const game = new Engine(gl)
 
