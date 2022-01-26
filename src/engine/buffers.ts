@@ -11,6 +11,10 @@ function createPositionBuffer(gl: WebGL2RenderingContext) {
 
   const positionBuffer = gl.createBuffer();
 
+  if (!positionBuffer) {
+    throw new Error('[createPositionBuffer] !positionBuffer')
+  }
+
   // Select the positionBuffer as the one to apply buffer
   // operations to from here out.
 
@@ -38,6 +42,10 @@ function createColorBuffer(gl: WebGL2RenderingContext) {
 
 
   const colorBuffer = gl.createBuffer();
+
+  if (!colorBuffer) {
+    throw new Error('[createColorBuffer] !colorBuffer')
+  }
 
 
   gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);

@@ -1,5 +1,5 @@
 import { mat4 } from 'gl-matrix';
-import { Vector } from '../excalibur/engine';
+import { Actor } from './Actor';
 
 export function clearScene(gl: WebGL2RenderingContext) {
   gl.clearColor(48 / 255, 48 / 255, 48 / 255, 1.0);  // Clear to black, fully opaque
@@ -11,7 +11,7 @@ export function clearScene(gl: WebGL2RenderingContext) {
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 }
 
-export function drawScene(gl: WebGL2RenderingContext, programInfo: any, buffers: any, translation: Vector, rotation: number) {
+export function drawActor(gl: WebGL2RenderingContext, actor: Actor) {
 
   // Create a perspective matrix, a special matrix that is
   // used to simulate the distortion of perspective in a camera.
@@ -42,61 +42,32 @@ export function drawScene(gl: WebGL2RenderingContext, programInfo: any, buffers:
 
   mat4.translate(modelViewMatrix,     // destination matrix
     modelViewMatrix,     // matrix to translate
-    [translation.x, translation.y, -6.0]);  // amount to translate
-  mat4.rotateZ(modelViewMatrix, modelViewMatrix, rotation * (Math.PI * 2))
+    [actor.pos.x, actor.pos.y, -6.0]);  // amount to translate
+  mat4.rotateZ(modelViewMatrix, modelViewMatrix, actor.rotation * (Math.PI * 2))
 
-  // Tell WebGL how to pull out the positions from the position
-  // buffer into the vertexPosition attribute.
-  {
-    const numComponents = 2;  // pull out 2 values per iteration
-    const type = gl.FLOAT;    // the data in the buffer is 32bit floats
-    const normalize = false;  // don't normalize
-    const stride = 0;         // how many bytes to get from one set of values to the next
-    // 0 = use type and numComponents above
-    const offset = 0;         // how many bytes inside the buffer to start from
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffers.position);
+  actor.material!.vertexAttributes.forEach(attr => {
+    gl.bindBuffer(gl.ARRAY_BUFFER, attr.buffer);
     gl.vertexAttribPointer(
-      programInfo.attribLocations.vertexPosition,
-      numComponents,
-      type,
-      normalize,
-      stride,
-      offset);
+      attr.location!,
+      attr.numComponents,
+      gl[attr.type],
+      attr.normalize,
+      attr.stride,
+      attr.offset);
     gl.enableVertexAttribArray(
-      programInfo.attribLocations.vertexPosition);
-  }
-
-  // Tell WebGL how to pull out the positions from the position
-  // buffer into the vertexPosition attribute.
-  {
-    const numComponents = 4;  // pull out 2 values per iteration
-    const type = gl.FLOAT;    // the data in the buffer is 32bit floats
-    const normalize = false;  // don't normalize
-    const stride = 0;         // how many bytes to get from one set of values to the next
-    // 0 = use type and numComponents above
-    const offset = 0;         // how many bytes inside the buffer to start from
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffers.color);
-    gl.vertexAttribPointer(
-      programInfo.attribLocations.vertexColor,
-      numComponents,
-      type,
-      normalize,
-      stride,
-      offset);
-    gl.enableVertexAttribArray(
-      programInfo.attribLocations.vertexColor);
-  }
+      attr.location!);
+  })
 
   // Tell WebGL to use our program when drawing
-  gl.useProgram(programInfo.program);
+  gl.useProgram(actor.material!.shaderProgram);
 
   // Set the shader uniforms
   gl.uniformMatrix4fv(
-    programInfo.uniformLocations.projectionMatrix,
+    actor.material!.programInfo.uniformLocations.projectionMatrix,
     false,
     projectionMatrix);
   gl.uniformMatrix4fv(
-    programInfo.uniformLocations.modelViewMatrix,
+    actor.material!.programInfo.uniformLocations.modelViewMatrix,
     false,
     modelViewMatrix);
 
