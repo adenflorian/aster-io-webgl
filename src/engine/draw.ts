@@ -73,7 +73,6 @@ export function drawActor(gl: WebGL2RenderingContext, actor: Actor) {
 
   {
     const offset = 0;
-    const vertexCount = 4;
-    gl.drawArrays(gl.TRIANGLE_STRIP, offset, vertexCount);
+    gl.drawArrays(gl.TRIANGLE_STRIP, offset, actor.material!.vertexCount);
   }
 }

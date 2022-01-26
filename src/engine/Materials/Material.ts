@@ -11,6 +11,7 @@ export abstract class Material {
     public vertexShaderCode: VertexShader,
     public fragmentShaderCode: FragmentShader,
     public vertexAttributes: VertexAttributes,
+    public vertexCount: number,
   ) {
     this.shaderProgram = initShaderProgram(engine.gl, this.vertexShaderCode, this.fragmentShaderCode)
     this.programInfo = {

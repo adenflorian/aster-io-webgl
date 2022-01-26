@@ -1,6 +1,6 @@
 import { Actor } from '../engine/Actor'
 import { Engine } from '../engine/Engine'
-import { AltMaterial, SquareMaterial } from '../engine/Materials/SquareMaterial'
+import { TriangleMaterial, SquareMaterial } from '../engine/Materials/SquareMaterial'
 
 export class PlayerShip extends Actor {
   public readonly onUpdate = (engine: Engine, delta: number) => {
@@ -13,9 +13,9 @@ export class PlayerShip extends Actor {
 
 export class PlayerShip2 extends Actor {
   public readonly onUpdate = (engine: Engine, delta: number) => {
-    this.rotation += delta / 20
+    this.rotation += delta
     this.pos.x = Math.sin(Date.now() / 4000) / 0.5
     this.pos.y = -1
-    this.material = new AltMaterial(engine);
+    this.material = new TriangleMaterial(engine);
   }
 }

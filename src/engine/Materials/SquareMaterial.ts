@@ -1,11 +1,12 @@
-import { initBuffers } from '../buffers';
+import { createSquare, createTriangle } from '../buffers';
+import { Colors } from '../Color';
 import { Engine } from '../Engine';
 import { Shaders } from '../shaders';
 import { Material, VertexAttributes } from './Material';
 
 export class SquareMaterial extends Material {
   public constructor(engine: Engine) {
-    const buffers = initBuffers(engine.gl)
+    const buffers = createSquare(engine.gl, 1, [Colors.green, Colors.yellow, Colors.cyan, Colors.blue])
     const vertexAttributes: VertexAttributes = new Map([
       ['position', {
         variableName: 'aVertexPosition',
@@ -26,13 +27,13 @@ export class SquareMaterial extends Material {
         buffer: buffers.color,
       }]
     ])
-    super(engine, Shaders.mainVert, Shaders.mainFrag, vertexAttributes)
+    super(engine, Shaders.mainVert, Shaders.mainFrag, vertexAttributes, 4)
   }
 }
 
-export class AltMaterial extends Material {
+export class TriangleMaterial extends Material {
   public constructor(engine: Engine) {
-    const buffers = initBuffers(engine.gl)
+    const buffers = createTriangle(engine.gl, 0.75)
     const vertexAttributes: VertexAttributes = new Map([
       ['position', {
         variableName: 'aVertexPosition',
@@ -53,6 +54,6 @@ export class AltMaterial extends Material {
         buffer: buffers.color,
       }]
     ])
-    super(engine, Shaders.altVert, Shaders.altFrag, vertexAttributes)
+    super(engine, Shaders.altVert, Shaders.altFrag, vertexAttributes, 3)
   }
 }
