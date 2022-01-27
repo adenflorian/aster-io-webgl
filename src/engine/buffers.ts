@@ -52,6 +52,7 @@ const defaultTriangleColors = [Colors.red, Colors.red, Colors.red] as const
 export function createTriangle(
   gl: WebGL2RenderingContext,
   size: number = 1,
+  width: number = 1,
   colors: typeof defaultTriangleColors | typeof Colors.red = defaultTriangleColors,
 ): MeshData {
   const positionBuffer = gl.createBuffer();
@@ -67,8 +68,8 @@ export function createTriangle(
 
   const positions = [
     0.0, R,
-    -1.0, -r,
-    1.0, -r,
+    -1.0 * width, -r,
+    1.0 * width, -r,
   ].map(x => x * size);
 
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);

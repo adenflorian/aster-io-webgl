@@ -32,8 +32,8 @@ export class SquareMaterial extends Material {
 }
 
 export class TriangleMaterial extends Material {
-  public constructor(engine: Engine) {
-    const buffers = createTriangle(engine.gl, 0.75)
+  public constructor(engine: Engine, size: number = 1, width: number = 1) {
+    const buffers = createTriangle(engine.gl, size, width)
     const vertexAttributes: VertexAttribute[] = [
       {
         variableName: 'aVertexPosition',
