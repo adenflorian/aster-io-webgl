@@ -29,6 +29,7 @@ export class Engine {
     clearScene(this._gl)
     for (const actor of this._actors) {
       actor.onUpdate(this, delta)
+      actor.onPhysicsUpdate(this, delta)
       drawActor(this._gl, actor)
     }
   }
