@@ -7,3 +7,7 @@ export const Colors = Object.freeze({
   purple: [1, 0, 1, 1],
   cyan: [0, 1, 1, 1],
 })
+
+export const defaultSquareColors = [Colors.red, Colors.red, Colors.red, Colors.red] as const
+
+export const defaultTriangleColors = [Colors.red, Colors.red, Colors.red] as const

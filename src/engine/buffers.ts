@@ -1,6 +1,4 @@
-import { Colors } from './Color';
-
-const defaultSquareColors = [Colors.red, Colors.red, Colors.red, Colors.red] as const
+import { Colors, defaultSquareColors, defaultTriangleColors } from './Color';
 
 export function createSquare(
   gl: WebGL2RenderingContext,
@@ -17,8 +15,8 @@ export function createSquare(
   const positions = [
     1.0, 1.0,
     -1.0, 1.0,
-    1.0, -1.0,
     -1.0, -1.0,
+    1.0, -1.0,
   ].map(x => x * size);
 
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
@@ -47,8 +45,6 @@ export function createSquare(
   };
 }
 
-const defaultTriangleColors = [Colors.red, Colors.red, Colors.red] as const
-
 export function createTriangle(
   gl: WebGL2RenderingContext,
   size: number = 1,
@@ -67,8 +63,8 @@ export function createTriangle(
   const r = R / 2
 
   const positions = [
-    0.0, R,
     -1.0 * width, -r,
+    0.0, R,
     1.0 * width, -r,
   ].map(x => x * size);
 

@@ -2,7 +2,7 @@ import { mat4 } from 'gl-matrix';
 import { Actor } from './Actor';
 
 export function clearScene(gl: WebGL2RenderingContext) {
-  gl.clearColor(48 / 255, 48 / 255, 48 / 255, 1.0);  // Clear to black, fully opaque
+  gl.clearColor(14 / 255, 14 / 255, 14 / 255, 1.0);  // Clear to black, fully opaque
   gl.clearDepth(1.0);                 // Clear everything
   gl.enable(gl.DEPTH_TEST);           // Enable depth testing
   gl.depthFunc(gl.LEQUAL);            // Near things obscure far things
@@ -76,6 +76,7 @@ export function drawActor(gl: WebGL2RenderingContext, actor: Actor) {
 
   {
     const offset = 0;
-    gl.drawArrays(gl.TRIANGLE_STRIP, offset, actor.material!.vertexCount);
+    gl.lineWidth(30000)
+    gl.drawArrays(gl.LINE_LOOP, offset, actor.material!.vertexCount);
   }
 }

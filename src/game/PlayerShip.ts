@@ -1,4 +1,5 @@
 import { Actor } from '../engine/Actor'
+import { Colors } from '../engine/Color';
 import { Engine } from '../engine/Engine'
 import { TriangleMaterial, SquareMaterial } from '../engine/Materials/SquareMaterial'
 import { Keys, vec } from '../excalibur/engine';
@@ -6,7 +7,7 @@ import { Keys, vec } from '../excalibur/engine';
 export class PlayerShip extends Actor {
   public constructor(engine: Engine) {
     super()
-    this.material = new SquareMaterial(engine);
+    this.material = new SquareMaterial(engine, 0.8, Colors.white);
   }
   public readonly onUpdate = (engine: Engine, delta: number) => {
     this.rotation += delta / 5
@@ -22,7 +23,7 @@ const maxVel = 4
 export class PlayerShip2 extends Actor {
   public constructor(engine: Engine) {
     super()
-    this.material = new TriangleMaterial(engine, 0.3, 0.5);
+    this.material = new TriangleMaterial(engine, 0.3, 0.5, Colors.white);
     this.drag = 0.996
   }
   public readonly onUpdate = (engine: Engine, delta: number) => {
@@ -37,11 +38,9 @@ export class PlayerShip2 extends Actor {
     }
     if (engine.input.keyboard.isHeld(Keys.A)) {
       this.rotation -= (rotateSpeed * delta)
-      console.log(this.rotation)
     }
     if (engine.input.keyboard.isHeld(Keys.D)) {
       this.rotation += (rotateSpeed * delta)
-      console.log(this.rotation)
     }
     if (this.vel.size > maxVel) {
       this.vel.size = maxVel

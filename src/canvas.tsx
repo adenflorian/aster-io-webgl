@@ -14,11 +14,11 @@ export function addCanvasToBody() {
     </div>
   ) as HTMLCanvasElement
 
-  document.body.appendChild(<h1>s q u a r e <sup>2</sup></h1>)
+  document.body.appendChild(<h1>l i n e s <sup>2</sup></h1>)
 
   document.body.appendChild(app)
 
-  const bottomText: HTMLHeadingElement = <h1>s q u a r e <sup>2</sup></h1>
+  const bottomText: HTMLHeadingElement = <h1>l i n e s <sup>2</sup></h1>
 
   document.body.appendChild(bottomText)
 
