@@ -11,6 +11,12 @@ export function clearScene(gl: WebGL2RenderingContext) {
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 }
 
+const fieldOfView = 45 * Math.PI / 180;   // in radians
+const zNear = 0.1;
+const zFar = 100.0;
+const projectionMatrix = mat4.create();
+const modelViewMatrix = mat4.create();
+
 export function drawActor(gl: WebGL2RenderingContext, actor: Actor) {
 
   // Create a perspective matrix, a special matrix that is
@@ -19,11 +25,7 @@ export function drawActor(gl: WebGL2RenderingContext, actor: Actor) {
   // ratio that matches the display size of the canvas
   // and we only want to see objects between 0.1 units
   // and 100 units away from the camera.
-  const fieldOfView = 45 * Math.PI / 180;   // in radians
   const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-  const zNear = 0.1;
-  const zFar = 100.0;
-  const projectionMatrix = mat4.create();
 
   // note: glmatrix.js always has the first argument
   // as the destination to receive the result.
@@ -35,17 +37,19 @@ export function drawActor(gl: WebGL2RenderingContext, actor: Actor) {
 
   // Set the drawing position to the "identity" point, which is
   // the center of the scene.
-  const modelViewMatrix = mat4.create();
 
   // Now move the drawing position a bit to where we want to
   // start drawing the square.
+
+  mat4.identity(modelViewMatrix)
 
   mat4.translate(modelViewMatrix,     // destination matrix
     modelViewMatrix,     // matrix to translate
     [actor.pos.x, actor.pos.y, -6.0]);  // amount to translate
   mat4.rotateZ(modelViewMatrix, modelViewMatrix, actor.rotation * (Math.PI * 2))
 
-  actor.material!.vertexAttributes.forEach(attr => {
+  for (let i = 0; i < actor.material!.vertexAttributes.length; i++) {
+    const attr = actor.material!.vertexAttributes[i]
     gl.bindBuffer(gl.ARRAY_BUFFER, attr.buffer);
     gl.vertexAttribPointer(
       attr.location!,
@@ -54,9 +58,8 @@ export function drawActor(gl: WebGL2RenderingContext, actor: Actor) {
       attr.normalize,
       attr.stride,
       attr.offset);
-    gl.enableVertexAttribArray(
-      attr.location!);
-  })
+    gl.enableVertexAttribArray(attr.location!);
+  }
 
   // Tell WebGL to use our program when drawing
   gl.useProgram(actor.material!.shaderProgram);
@@ -73,6 +76,6 @@ export function drawActor(gl: WebGL2RenderingContext, actor: Actor) {
 
   {
     const offset = 0;
-    gl.drawArrays(gl.TRIANGLE_STRIP, offset, actor.material!.vertexCount);
+    gl.drawArrays(gl.LINE_STRIP, offset, actor.material!.vertexCount);
   }
 }

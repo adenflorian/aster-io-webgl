@@ -10,7 +10,7 @@ export abstract class Material {
     engine: Engine,
     public vertexShaderCode: VertexShader,
     public fragmentShaderCode: FragmentShader,
-    public vertexAttributes: VertexAttributes,
+    public vertexAttributes: readonly VertexAttribute[],
     public vertexCount: number,
   ) {
     this.shaderProgram = initShaderProgram(engine.gl, this.vertexShaderCode, this.fragmentShaderCode)
@@ -34,7 +34,6 @@ function tryGetUniformLocation(engine: Engine, shaderProgram: WebGLProgram, name
   return location
 }
 
-export interface VertexAttributes extends ReadonlyMap<string, VertexAttribute> { }
 
 export interface VertexAttribute {
   readonly variableName: string

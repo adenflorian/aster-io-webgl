@@ -26,8 +26,10 @@ export class Engine {
   }
 
   public readonly update = (delta: number) => {
-    this._actors.forEach(x => x.onUpdate(this, delta))
     clearScene(this._gl)
-    this._actors.forEach(x => drawActor(this._gl, x))
+    for (const actor of this._actors) {
+      actor.onUpdate(this, delta)
+      drawActor(this._gl, actor)
+    }
   }
 }
