@@ -3,13 +3,13 @@ import { PlayerShip, PlayerShip2 } from './PlayerShip'
 
 export function startGame(gl: WebGL2RenderingContext) {
 
-  const game = new Engine(gl)
+  const engine = new Engine(gl)
 
-  const playerShip = new PlayerShip()
-  const playerShip2 = new PlayerShip2()
+  const playerShip = new PlayerShip(engine)
+  const playerShip2 = new PlayerShip2(engine)
 
-  game.add(playerShip)
-  game.add(playerShip2)
+  engine.add(playerShip)
+  engine.add(playerShip2)
 
-  game.start()
+  engine.start()
 }
