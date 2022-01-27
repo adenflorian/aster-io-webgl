@@ -46,7 +46,7 @@ export function drawActor(gl: WebGL2RenderingContext, actor: Actor) {
   mat4.translate(modelViewMatrix,     // destination matrix
     modelViewMatrix,     // matrix to translate
     [actor.pos.x, actor.pos.y, -6.0]);  // amount to translate
-  mat4.rotateZ(modelViewMatrix, modelViewMatrix, actor.rotation * (Math.PI * 2))
+  mat4.rotateZ(modelViewMatrix, modelViewMatrix, -actor.rotation)
 
   for (let i = 0; i < actor.material!.vertexAttributes.length; i++) {
     const attr = actor.material!.vertexAttributes[i]
@@ -76,6 +76,6 @@ export function drawActor(gl: WebGL2RenderingContext, actor: Actor) {
 
   {
     const offset = 0;
-    gl.drawArrays(gl.LINE_STRIP, offset, actor.material!.vertexCount);
+    gl.drawArrays(gl.TRIANGLE_STRIP, offset, actor.material!.vertexCount);
   }
 }
