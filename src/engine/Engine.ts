@@ -1,3 +1,4 @@
+import { Keyboard } from '../excalibur/engine'
 import { Actor } from './Actor'
 import { clearScene, drawActor } from './draw'
 
@@ -5,10 +6,16 @@ export class Engine {
   private readonly _actors = [] as Actor[]
   private _lastTimestamp: DOMHighResTimeStamp = 0
   public get gl() { return this._gl }
+  public readonly input: EngineInput
 
   public constructor(
     private readonly _gl: WebGL2RenderingContext,
-  ) { }
+  ) {
+    this.input = {
+      keyboard: new Keyboard()
+    }
+    this.input.keyboard.init()
+  }
 
   public readonly add = (actor: Actor) => {
     this._actors.push(actor)
@@ -33,4 +40,8 @@ export class Engine {
       drawActor(this._gl, actor)
     }
   }
+}
+
+interface EngineInput {
+  readonly keyboard: Keyboard
 }
