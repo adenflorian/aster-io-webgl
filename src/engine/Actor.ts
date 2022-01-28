@@ -1,15 +1,36 @@
 import { Engine } from './Engine'
-import { vec } from '../excalibur/engine'
+import { vec, Vector } from '../excalibur/engine'
 import { Material } from './Materials/Material'
+import { TransformComponent } from './Transform'
 
 export abstract class Actor {
-  public pos = vec()
+  public enabled = true
   public vel = vec()
+  public get pos() { return this.transform.pos }
+  public set pos(val: Vector) { this.transform.pos = val }
+  public get rotation() { return this.transform.rotation }
+  public set rotation(val: number) { this.transform.rotation = val }
+  private _transform = new TransformComponent(this)
+  public get transform() { return this._transform }
+  private _parent?: Actor
+  public get parent() { return this._parent }
+  public physics = false
   public drag = 1
-  public rotation = 0
   public material?: Material
+  private _children: Actor[] = []
+  public get children() { return this._children }
+
   public abstract onUpdate(game: Engine, delta: number): void
+
+  public addChild<T extends Actor>(child: T) {
+    this._children.push(child)
+    child.setParent(this)
+    return child
+  }
+
   public onPhysicsUpdate(game: Engine, delta: number) {
+    if (!this.physics) return
+    if (!this.enabled) return
     this.pos = this.pos.add(this.vel.scale(delta))
     if (this.vel.size > 0) {
       if (this.vel.size < 0.0001) {
@@ -18,5 +39,9 @@ export abstract class Actor {
         this.vel = this.vel.scale(this.drag)
       }
     }
+  }
+
+  private setParent(newParent: Actor) {
+    this._parent = newParent
   }
 }

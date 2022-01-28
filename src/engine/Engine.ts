@@ -29,15 +29,24 @@ export class Engine {
     const delta = timestamp - this._lastTimestamp
     this._lastTimestamp = timestamp
     this.update(delta / 1000)
+    this.input.keyboard.update()
     requestAnimationFrame(this.loop)
   }
 
   public readonly update = (delta: number) => {
     clearScene(this._gl)
     for (const actor of this._actors) {
-      actor.onUpdate(this, delta)
-      actor.onPhysicsUpdate(this, delta)
-      drawActor(this._gl, actor)
+      this.updateActor(actor, delta)
+    }
+  }
+
+  private readonly updateActor = (actor: Actor, delta: number) => {
+    if (!actor.enabled) return
+    actor.onUpdate(this, delta)
+    actor.onPhysicsUpdate(this, delta)
+    drawActor(this._gl, actor)
+    for (const child of actor.children) {
+      this.updateActor(child, delta)
     }
   }
 }

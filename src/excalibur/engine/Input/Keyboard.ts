@@ -192,7 +192,7 @@ export class Keyboard {
   /**
    * Initialize Keyboard event listeners
    */
-  init(global?: GlobalEventHandlers): void {
+  public init(global?: GlobalEventHandlers): void {
     if (!global) {
       try {
         // Try and listen to events on top window frame if within an iframe.

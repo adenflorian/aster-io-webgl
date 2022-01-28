@@ -43,10 +43,12 @@ export function drawActor(gl: WebGL2RenderingContext, actor: Actor) {
 
   mat4.identity(modelViewMatrix)
 
+  const transform = actor.transform.getGlobalTransform()
+
   mat4.translate(modelViewMatrix,     // destination matrix
     modelViewMatrix,     // matrix to translate
-    [actor.pos.x, actor.pos.y, -6.0]);  // amount to translate
-  mat4.rotateZ(modelViewMatrix, modelViewMatrix, -actor.rotation)
+    [transform.pos.x, transform.pos.y, -6.0]);  // amount to translate
+  mat4.rotateZ(modelViewMatrix, modelViewMatrix, transform.rotation)
 
   for (let i = 0; i < actor.material!.vertexAttributes.length; i++) {
     const attr = actor.material!.vertexAttributes[i]
