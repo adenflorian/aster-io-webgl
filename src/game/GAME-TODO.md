@@ -1,0 +1,2 @@
+- [√] orthographic camera
+- [ ] teleport ship to other side

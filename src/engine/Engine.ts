@@ -3,14 +3,19 @@ import { Actor } from './Actor'
 import { clearScene, drawActor } from './draw'
 
 export class Engine {
-  private readonly _actors = [] as Actor[]
-  private _lastTimestamp: DOMHighResTimeStamp = 0
-  public get gl() { return this._gl }
   public readonly input: EngineInput
+  public get gl() { return this._gl }
+  public get canvasWidth() { return this._canvas.width }
+  public get canvasHeight() { return this._canvas.height }
+  private readonly _actors = [] as Actor[]
+  private readonly _gl: WebGL2RenderingContext
+  private _lastTimestamp: DOMHighResTimeStamp = 0
 
   public constructor(
-    private readonly _gl: WebGL2RenderingContext,
+    private readonly _canvas: HTMLCanvasElement,
   ) {
+    this._gl = getContext(this._canvas)
+
     this.input = {
       keyboard: new Keyboard()
     }
@@ -44,11 +49,22 @@ export class Engine {
     if (!actor.enabled) return
     actor.onUpdate(this, delta)
     actor.onPhysicsUpdate(this, delta)
-    drawActor(this._gl, actor)
+    drawActor(this, actor)
     for (const child of actor.children) {
       this.updateActor(child, delta)
     }
   }
+}
+
+function getContext(canvas: HTMLCanvasElement) {
+  const gl = canvas.getContext('webgl2')
+
+  // Only continue if WebGL is available and working
+  if (gl === null) {
+    throw new Error('Unable to initialize WebGL. Your browser or machine may not support it.');
+  }
+
+  return gl
 }
 
 interface EngineInput {

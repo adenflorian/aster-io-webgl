@@ -1,0 +1,2 @@
+- [√] orthographic camera
+- [ ] svg

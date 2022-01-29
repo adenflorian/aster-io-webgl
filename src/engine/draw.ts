@@ -1,5 +1,6 @@
 import { mat4 } from 'gl-matrix';
 import { Actor } from './Actor';
+import { Engine } from './Engine';
 
 export function clearScene(gl: WebGL2RenderingContext) {
   gl.clearColor(14 / 255, 14 / 255, 14 / 255, 1.0);  // Clear to black, fully opaque
@@ -17,7 +18,8 @@ const zFar = 100.0;
 const projectionMatrix = mat4.create();
 const modelViewMatrix = mat4.create();
 
-export function drawActor(gl: WebGL2RenderingContext, actor: Actor) {
+export function drawActor(engine: Engine, actor: Actor) {
+  const { gl } = engine
 
   // Create a perspective matrix, a special matrix that is
   // used to simulate the distortion of perspective in a camera.
@@ -29,11 +31,25 @@ export function drawActor(gl: WebGL2RenderingContext, actor: Actor) {
 
   // note: glmatrix.js always has the first argument
   // as the destination to receive the result.
-  mat4.perspective(projectionMatrix,
-    fieldOfView,
-    aspect,
-    zNear,
-    zFar);
+  // mat4.perspective(projectionMatrix,
+  //   fieldOfView,
+  //   aspect,
+  //   zNear,
+  //   zFar);
+
+  // const width = 640
+  // const height = 480
+  const size = 6
+  const width = (engine.canvasWidth / engine.canvasHeight) * size
+  const height = 1 * size
+  mat4.ortho(projectionMatrix,
+    -width / 2,
+    width / 2,
+    -height / 2,
+    height / 2,
+    -100,
+    100,
+  )
 
   // Set the drawing position to the "identity" point, which is
   // the center of the scene.
