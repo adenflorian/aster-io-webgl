@@ -19,6 +19,7 @@ export class PlayerShip extends Actor {
 const accel = 2
 const rotateSpeed = 3
 const maxVel = 4
+const orthoEdgeOffset = 1.13
 
 export class PlayerShip2 extends Actor {
   private _thruster: ShipThruster
@@ -49,6 +50,22 @@ export class PlayerShip2 extends Actor {
     }
     if (this.vel.size > maxVel) {
       this.vel.size = maxVel
+    }
+
+    const gameAreaWidth = engine.orthoWidth * orthoEdgeOffset
+    const gameAreaHeight = engine.orthoHeight * orthoEdgeOffset
+
+    if (this.pos.y > gameAreaHeight / 2) {
+      this.pos.y -= gameAreaHeight
+    }
+    if (this.pos.y < -gameAreaHeight / 2) {
+      this.pos.y += gameAreaHeight
+    }
+    if (this.pos.x > gameAreaWidth / 2) {
+      this.pos.x -= gameAreaWidth
+    }
+    if (this.pos.x < -gameAreaWidth / 2) {
+      this.pos.x += gameAreaWidth
     }
   }
 }

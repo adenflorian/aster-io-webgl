@@ -1,2 +1,6 @@
 - [√] orthographic camera
-- [ ] teleport ship to other side
+- [√] teleport ship to other side
+- [ ] spawn asteroids
+- [ ] score display
+- [ ] ufo
+- [ ] game loop

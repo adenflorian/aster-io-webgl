@@ -7,6 +7,10 @@ export class Engine {
   public get gl() { return this._gl }
   public get canvasWidth() { return this._canvas.width }
   public get canvasHeight() { return this._canvas.height }
+  public get aspectRatio() { return this.canvasWidth / this.canvasHeight }
+  public get orthoWidth() { return this.aspectRatio * this.orthographicCameraSize }
+  public get orthoHeight() { return this.orthographicCameraSize }
+  public orthographicCameraSize = 6
   private readonly _actors = [] as Actor[]
   private readonly _gl: WebGL2RenderingContext
   private _lastTimestamp: DOMHighResTimeStamp = 0

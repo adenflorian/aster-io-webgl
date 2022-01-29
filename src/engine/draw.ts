@@ -39,7 +39,7 @@ export function drawActor(engine: Engine, actor: Actor) {
 
   // const width = 640
   // const height = 480
-  const size = 6
+  const size = engine.orthographicCameraSize
   const width = (engine.canvasWidth / engine.canvasHeight) * size
   const height = 1 * size
   mat4.ortho(projectionMatrix,
