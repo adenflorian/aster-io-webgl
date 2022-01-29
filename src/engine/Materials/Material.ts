@@ -1,4 +1,5 @@
 import { Engine } from '../Engine'
+import { RenderingPrimitive } from '../gl-types'
 import { initShaderProgram } from '../shader-loading'
 import { FragmentShader, VertexShader } from '../shaders'
 
@@ -12,6 +13,7 @@ export abstract class Material {
     public fragmentShaderCode: FragmentShader,
     public vertexAttributes: readonly VertexAttribute[],
     public vertexCount: number,
+    public drawMode: RenderingPrimitive = RenderingPrimitive.LINE_LOOP,
   ) {
     this.shaderProgram = initShaderProgram(engine.gl, this.vertexShaderCode, this.fragmentShaderCode)
     this.programInfo = {

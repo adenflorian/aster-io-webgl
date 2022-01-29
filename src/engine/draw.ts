@@ -78,7 +78,6 @@ export function drawActor(gl: WebGL2RenderingContext, actor: Actor) {
 
   {
     const offset = 0;
-    gl.lineWidth(30000)
-    gl.drawArrays(gl.LINE_LOOP, offset, actor.material!.vertexCount);
+    gl.drawArrays(actor.material!.drawMode, offset, actor.material!.vertexCount);
   }
 }

@@ -1,7 +1,7 @@
 import { Actor } from '../engine/Actor'
 import { Colors } from '../engine/Color';
 import { Engine } from '../engine/Engine'
-import { TriangleMaterial, SquareMaterial } from '../engine/Materials/SquareMaterial'
+import { TriangleMaterial, SquareMaterial } from '../engine/Materials/ShipMaterials'
 import { Keys, vec } from '../excalibur/engine';
 
 export class PlayerShip extends Actor {
