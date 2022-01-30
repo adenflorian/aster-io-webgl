@@ -53,7 +53,9 @@ export class Engine {
     if (!actor.enabled) return
     actor.onUpdate(this, delta)
     actor.onPhysicsUpdate(this, delta)
-    drawActor(this, actor)
+    if (actor.renderer && actor.renderer.programInfo) {
+      drawActor(this, actor.transform.getGlobalTransform(), actor.renderer.programInfo)
+    }
     for (const child of actor.children) {
       this.updateActor(child, delta)
     }

@@ -1,6 +1,7 @@
 import { mat4 } from 'gl-matrix';
-import { Actor } from './Actors/Actor';
+import { ShaderProgramInfo } from './Components/RendererComponent';
 import { Engine } from './Engine';
+import { Transform } from './Transform';
 
 export function clearScene(gl: WebGL2RenderingContext) {
   gl.clearColor(14 / 255, 14 / 255, 14 / 255, 1.0);  // Clear to black, fully opaque
@@ -18,7 +19,7 @@ const zFar = 100.0;
 const projectionMatrix = mat4.create();
 const modelViewMatrix = mat4.create();
 
-export function drawActor(engine: Engine, actor: Actor) {
+export function drawActor(engine: Engine, transform: Transform, programInfo: ShaderProgramInfo) {
   const { gl } = engine
 
   // Create a perspective matrix, a special matrix that is
@@ -59,15 +60,13 @@ export function drawActor(engine: Engine, actor: Actor) {
 
   mat4.identity(modelViewMatrix)
 
-  const transform = actor.transform.getGlobalTransform()
-
   mat4.translate(modelViewMatrix,     // destination matrix
     modelViewMatrix,     // matrix to translate
     [transform.pos.x, transform.pos.y, -6.0]);  // amount to translate
   mat4.rotateZ(modelViewMatrix, modelViewMatrix, transform.rotation)
 
-  for (let i = 0; i < actor.material!.vertexAttributes.length; i++) {
-    const attr = actor.material!.vertexAttributes[i]
+  for (let i = 0; i < programInfo.vertexAttributes.length; i++) {
+    const attr = programInfo.vertexAttributes[i]
     gl.bindBuffer(gl.ARRAY_BUFFER, attr.buffer);
     gl.vertexAttribPointer(
       attr.location!,
@@ -80,20 +79,20 @@ export function drawActor(engine: Engine, actor: Actor) {
   }
 
   // Tell WebGL to use our program when drawing
-  gl.useProgram(actor.material!.shaderProgram);
+  gl.useProgram(programInfo.shaderProgram);
 
   // Set the shader uniforms
   gl.uniformMatrix4fv(
-    actor.material!.programInfo.uniformLocations.projectionMatrix,
+    programInfo.uniformLocations.projectionMatrix,
     false,
     projectionMatrix);
   gl.uniformMatrix4fv(
-    actor.material!.programInfo.uniformLocations.modelViewMatrix,
+    programInfo.uniformLocations.modelViewMatrix,
     false,
     modelViewMatrix);
 
   {
     const offset = 0;
-    gl.drawArrays(actor.material!.drawMode, offset, actor.material!.vertexCount);
+    gl.drawArrays(programInfo.drawMode, offset, programInfo.vertexCount);
   }
 }

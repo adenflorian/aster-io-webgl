@@ -1,8 +1,9 @@
 import { createSquare, createTriangle } from '../buffers';
 import { Colors, defaultSquareColors, defaultTriangleColors } from '../Color';
+import { VertexAttribute } from '../Components/RendererComponent';
 import { Engine } from '../Engine';
 import { Shaders } from '../shaders';
-import { Material, VertexAttribute } from './Material';
+import { Material } from './Material';
 
 export class SquareMaterial extends Material {
   public constructor(engine: Engine, size: number = 1, colors: typeof defaultSquareColors | typeof Colors.red = [Colors.green, Colors.yellow, Colors.cyan, Colors.blue]) {

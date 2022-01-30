@@ -1,5 +1,6 @@
 import { Actor } from '../../engine/Actors/Actor'
 import { Colors } from '../../engine/Color';
+import { MeshRenderer } from '../../engine/Components/MeshRenderer';
 import { Engine } from '../../engine/Engine'
 import { TriangleMaterial } from '../../engine/Materials/ShipMaterials'
 import { Keys, vec } from '../../excalibur/engine';
@@ -14,7 +15,8 @@ export class PlayerShip extends Actor {
 
   public constructor(engine: Engine) {
     super()
-    this.material = new TriangleMaterial(engine, 0.3, 0.5, Colors.white);
+    this.renderer = new MeshRenderer(engine)
+    this.renderer.material = new TriangleMaterial(engine, 0.3, 0.5, Colors.white);
     this.physics = true
     this.drag = 0.996
     this._thruster = new ShipThruster(engine)
@@ -61,7 +63,8 @@ export class PlayerShip extends Actor {
 class ShipThruster extends Actor {
   public constructor(engine: Engine) {
     super()
-    this.material = new TriangleMaterial(engine, 0.1, 0.5, Colors.white);
+    this.renderer = new MeshRenderer(engine)
+    this.renderer.material = new TriangleMaterial(engine, 0.1, 0.5, Colors.white);
     this.pos = vec(0, -0.23)
     this.rotation = Math.PI
     this.enabled = false

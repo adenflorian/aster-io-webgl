@@ -2,6 +2,7 @@ import { Engine } from '../Engine'
 import { vec, Vector } from '../../excalibur/engine'
 import { Material } from '../Materials/Material'
 import { TransformComponent } from '../Transform'
+import { RendererComponent } from '../Components/RendererComponent'
 
 export abstract class Actor {
   public enabled = true
@@ -19,6 +20,7 @@ export abstract class Actor {
   public material?: Material
   private _children: Actor[] = []
   public get children() { return this._children }
+  public renderer?: RendererComponent
 
   public abstract onUpdate(game: Engine, delta: number): void
 
