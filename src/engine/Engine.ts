@@ -1,5 +1,5 @@
 import { Keyboard } from '../excalibur/engine'
-import { Actor } from './Actor'
+import { Actor } from './Actors/Actor'
 import { clearScene, drawActor } from './draw'
 
 export class Engine {

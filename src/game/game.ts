@@ -1,15 +1,16 @@
 import { Engine } from '../engine/Engine'
-import { PlayerShip, PlayerShip2 } from './PlayerShip'
+import { Asteroid } from './actors/Asteroid'
+import { PlayerShip } from './actors/PlayerShip'
 
 export function startGame(canvas: HTMLCanvasElement) {
 
   const engine = new Engine(canvas)
 
+  const asteroid = new Asteroid(engine)
   const playerShip = new PlayerShip(engine)
-  const playerShip2 = new PlayerShip2(engine)
 
+  engine.add(asteroid)
   engine.add(playerShip)
-  engine.add(playerShip2)
 
   engine.start()
 }

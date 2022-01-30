@@ -1,7 +1,7 @@
-import { Engine } from './Engine'
-import { vec, Vector } from '../excalibur/engine'
-import { Material } from './Materials/Material'
-import { TransformComponent } from './Transform'
+import { Engine } from '../Engine'
+import { vec, Vector } from '../../excalibur/engine'
+import { Material } from '../Materials/Material'
+import { TransformComponent } from '../Transform'
 
 export abstract class Actor {
   public enabled = true

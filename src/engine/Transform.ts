@@ -1,7 +1,7 @@
 import { vec, Vector } from '../excalibur/engine';
 import { Matrix, MatrixLocations } from '../excalibur/engine/Math/matrix';
 import { VectorView } from '../excalibur/engine/Math/vector-view';
-import { Actor } from './Actor';
+import { Actor } from './Actors/Actor';
 
 export interface Transform {
   /**

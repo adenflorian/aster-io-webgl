@@ -1,5 +1,5 @@
 import { mat4 } from 'gl-matrix';
-import { Actor } from './Actor';
+import { Actor } from './Actors/Actor';
 import { Engine } from './Engine';
 
 export function clearScene(gl: WebGL2RenderingContext) {

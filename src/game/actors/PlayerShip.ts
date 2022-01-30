@@ -1,27 +1,15 @@
-import { Actor } from '../engine/Actor'
-import { Colors } from '../engine/Color';
-import { Engine } from '../engine/Engine'
-import { TriangleMaterial, SquareMaterial } from '../engine/Materials/ShipMaterials'
-import { Keys, vec } from '../excalibur/engine';
-
-export class PlayerShip extends Actor {
-  public constructor(engine: Engine) {
-    super()
-    this.material = new SquareMaterial(engine, 0.8, Colors.white);
-  }
-  public readonly onUpdate = (_: Engine, delta: number) => {
-    this.rotation += delta / 5
-    this.pos.x = -2
-    this.pos.y = Math.sin(Date.now() / 1000)
-  }
-}
+import { Actor } from '../../engine/Actors/Actor'
+import { Colors } from '../../engine/Color';
+import { Engine } from '../../engine/Engine'
+import { TriangleMaterial } from '../../engine/Materials/ShipMaterials'
+import { Keys, vec } from '../../excalibur/engine';
 
 const accel = 2
 const rotateSpeed = 3
 const maxVel = 4
 const orthoEdgeOffset = 1.13
 
-export class PlayerShip2 extends Actor {
+export class PlayerShip extends Actor {
   private _thruster: ShipThruster
 
   public constructor(engine: Engine) {
