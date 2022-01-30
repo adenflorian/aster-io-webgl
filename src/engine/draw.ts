@@ -1,5 +1,5 @@
 import { mat4 } from 'gl-matrix'
-import { ShaderProgramInfo } from './Components/RendererComponent'
+import { ShaderProgramInfo } from './Components/VertexStuff'
 import { Engine } from './Engine'
 import { Transform } from './Transform'
 

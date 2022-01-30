@@ -14,3 +14,5 @@ export enum RenderingPrimitive {
   /** Passed to drawElements or drawArrays to draw a connected group of triangles. Each vertex connects to the previous and the first vertex in the fan. */
   TRIANGLE_FAN = 0x0006,
 }
+
+export type VertexAttributeComponentDataType = 'BYTE' | 'SHORT' | 'UNSIGNED_BYTE' | 'UNSIGNED_SHORT' | 'FLOAT' | 'HALF_FLOAT'

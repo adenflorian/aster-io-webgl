@@ -1,100 +1,43 @@
-import { Colors, defaultSquareColors, defaultTriangleColors } from './Color';
+import Color from 'color'
+import { vec } from '../excalibur/engine'
+import { defaultSquareColors, defaultTriangleColors } from './Color'
+import { Engine } from './Engine'
+import { Mesh } from './Mesh'
 
-export function createSquare(
-  gl: WebGL2RenderingContext,
+export function createSquareMesh(
+  engine: Engine,
   size: number = 1,
-  colors: typeof defaultSquareColors | typeof Colors.red = defaultSquareColors,
-): MeshData {
-  const positionBuffer = gl.createBuffer();
-
-  if (!positionBuffer) {
-    throw new Error('[createPositionBuffer] !positionBuffer')
-  }
-  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+  colors: readonly Color[] = defaultSquareColors,
+): Mesh {
+  if (colors.length !== 4) throw new Error('square colors must be exactly 4 colors')
 
   const positions = [
-    1.0, 1.0,
-    -1.0, 1.0,
-    -1.0, -1.0,
-    1.0, -1.0,
-  ].map(x => x * size);
+    vec(1.0, 1.0),
+    vec(-1.0, 1.0),
+    vec(-1.0, -1.0),
+    vec(1.0, -1.0),
+  ].map(x => x.scale(size))
 
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-
-  const colorBuffer = gl.createBuffer();
-
-  if (!colorBuffer) {
-    throw new Error('[createColorBuffer] !colorBuffer')
-  }
-
-  gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-
-  const colorsFlat = colors.flat()
-
-  let colorsFinal = colorsFlat
-
-  if (colorsFlat.length === 4) {
-    colorsFinal = [...colorsFlat, ...colorsFlat, ...colorsFlat, ...colorsFlat]
-  }
-
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colorsFinal), gl.STATIC_DRAW);
-
-  return {
-    position: positionBuffer,
-    color: colorBuffer,
-  };
+  return new Mesh(engine, positions, colors)
 }
 
 export function createTriangle(
-  gl: WebGL2RenderingContext,
+  engine: Engine,
   size: number = 1,
   width: number = 1,
-  colors: typeof defaultTriangleColors | typeof Colors.red = defaultTriangleColors,
-): MeshData {
-  const positionBuffer = gl.createBuffer();
-
-  if (!positionBuffer) {
-    throw new Error('[createPositionBuffer] !positionBuffer')
-  }
-  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+  colors: readonly Color[] = defaultTriangleColors,
+): Mesh {
+  if (colors.length !== 3) throw new Error('triangle colors must be exactly 3 colors')
 
   const height = Math.sqrt(3)
   const R = (2 * height) / 3
   const r = R / 2
 
   const positions = [
-    -1.0 * width, -r,
-    0.0, R,
-    1.0 * width, -r,
-  ].map(x => x * size);
+    vec(-1.0 * width, -r),
+    vec(0.0, R),
+    vec(1.0 * width, -r),
+  ].map(x => x.scale(size))
 
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-
-  const colorBuffer = gl.createBuffer();
-
-  if (!colorBuffer) {
-    throw new Error('[createColorBuffer] !colorBuffer')
-  }
-
-  gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-
-  const colorsFlat = colors.flat()
-
-  let colorsFinal = colorsFlat
-
-  if (colorsFlat.length === 4) {
-    colorsFinal = [...colorsFlat, ...colorsFlat, ...colorsFlat]
-  }
-
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colorsFinal), gl.STATIC_DRAW);
-
-  return {
-    position: positionBuffer,
-    color: colorBuffer,
-  };
-}
-
-export interface MeshData {
-  position: WebGLBuffer
-  color: WebGLBuffer
+  return new Mesh(engine, positions, colors)
 }

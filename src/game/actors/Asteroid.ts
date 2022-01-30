@@ -1,14 +1,13 @@
 import { Actor } from '../../engine/Actors/Actor';
-import { Colors } from '../../engine/Color';
-import { MeshRenderer } from '../../engine/Components/MeshRenderer';
+import { LineRenderer } from '../../engine/Components/LineRenderer';
 import { Engine } from '../../engine/Engine';
-import { SquareMaterial } from '../../engine/Materials/ShipMaterials';
 
 export class Asteroid extends Actor {
   public constructor(engine: Engine) {
     super()
-    this.renderer = new MeshRenderer(engine)
-    this.renderer.material = new SquareMaterial(engine, 0.8, Colors.white);
+    const lineRenderer = new LineRenderer(engine)
+    lineRenderer.setPath('M -10 6 L -13 -1 L -10 -3 L -10 -5 L -14 -7 L -10 -15 L 0 -17 L 4 -12 L 12 -9 L 13 -2 L 10 4 L 2 8')
+    this.renderer = lineRenderer
   }
   public readonly onUpdate = (_: Engine, delta: number) => {
     this.rotation += delta / 5
