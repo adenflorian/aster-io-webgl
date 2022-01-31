@@ -1,5 +1,5 @@
 import Color from 'color';
-import { vec } from '../../excalibur/engine';
+import { vec, Vector } from '../../excalibur/engine';
 import { Engine } from '../Engine';
 import { RenderingPrimitive } from '../gl-types';
 import { DefaultMaterial } from '../Materials/DefaultMaterial';
@@ -22,16 +22,38 @@ export class LineRenderer extends RendererComponent {
   }
 
   public readonly setPath = (path: string) => {
+    const args = path.split(' ')
+    let i = 0
+    let cursor = vec(0, 0)
+    let lastCommand: string | undefined
 
-    // TODO Create vertex positions based on svg path string
+    let positions: Vector[] = []
 
-    const positions = [
-      vec(0.5, 0.8),
-      vec(-1.0, 1.3),
-      vec(-0.7, -1.0),
-      vec(0.9, -1.7),
-      vec(0.3, -1.1),
-    ]
+    while (true) {
+      const command = args[i]
+
+      if (!command) break;
+
+      if (command === 'M') {
+        const x = args[i + 1]
+        const y = args[i + 2]
+        cursor.x = Number.parseFloat(x)
+        cursor.y = Number.parseFloat(y)
+        i += 3
+      }
+
+      if (command === 'L') {
+        if (lastCommand === 'M') {
+          positions.push(cursor.clone())
+        }
+        const x = args[i + 1]
+        const y = args[i + 2]
+        positions.push(vec(Number.parseFloat(x), Number.parseFloat(y)))
+        i += 3
+      }
+
+      lastCommand = command
+    }
 
     const vertexCount = positions.length
     const colors = new Array(vertexCount).fill(0).map(_ => Color('white'))
