@@ -5,3 +5,11 @@ export function tryCreateBuffer(gl: WebGL2RenderingContext) {
   }
   return buffer
 }
+
+export function tryGetAttribLocation(gl: WebGL2RenderingContext, program: WebGLProgram, name: string) {
+  const location = gl.getAttribLocation(program, name)
+  if (location === -1) {
+    throw new Error('tryGetAttribLocation failed to get location')
+  }
+  return location
+}

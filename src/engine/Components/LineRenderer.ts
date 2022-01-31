@@ -2,6 +2,7 @@ import Color from 'color';
 import { vec, Vector } from '../../excalibur/engine';
 import { Engine } from '../Engine';
 import { RenderingPrimitive } from '../gl-types';
+import { tryGetAttribLocation } from '../gl-utils';
 import { DefaultMaterial } from '../Materials/DefaultMaterial';
 import { Material } from '../Materials/Material';
 import { Mesh } from '../Mesh';
@@ -71,14 +72,13 @@ export class LineRenderer extends RendererComponent {
       shaderProgram,
       vertexAttributes: this._mesh.getVertexAttributeData().map(x => ({
         ...x,
-        location: this._engine.gl.getAttribLocation(shaderProgram, x.variableName),
+        location: tryGetAttribLocation(this._engine.gl, shaderProgram, x.variableName),
       })),
       uniformLocations: {
         projectionMatrix: tryGetUniformLocation(this._engine, shaderProgram, 'uProjectionMatrix'),
         modelViewMatrix: tryGetUniformLocation(this._engine, shaderProgram, 'uModelViewMatrix'),
       },
       vertexCount: this._mesh.vertexCount,
-      // drawMode: RenderingPrimitive.TRIANGLE_STRIP,
       drawMode: RenderingPrimitive.LINE_LOOP,
     }
   }
