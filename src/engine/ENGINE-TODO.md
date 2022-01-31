@@ -1,2 +1,4 @@
 - [√] orthographic camera
-- [ ] svg
+- [ ] draw lines with svg path M and L commands
+- [ ] more svg
+- [ ] better line renderer that makes polygons and stuff and fancy shaders
