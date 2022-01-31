@@ -89,4 +89,7 @@ function setUniforms(engine: Engine, transform: Transform, programInfo: ShaderPr
     programInfo.uniformLocations.modelViewMatrix,
     false,
     modelViewMatrix)
+  gl.uniform4fv(
+    programInfo.uniformLocations.color,
+    programInfo.color)
 }

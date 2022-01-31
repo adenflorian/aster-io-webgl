@@ -18,9 +18,11 @@ export interface ShaderProgramInfo {
   uniformLocations: {
     projectionMatrix: WebGLUniformLocation,
     modelViewMatrix: WebGLUniformLocation,
+    color: WebGLUniformLocation,
   },
   vertexCount: number,
   drawMode: RenderingPrimitive,
+  color: number[],
 }
 
 export function tryGetUniformLocation(engine: Engine, shaderProgram: WebGLProgram, name: string) {

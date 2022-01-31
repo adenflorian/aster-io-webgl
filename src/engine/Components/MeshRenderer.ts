@@ -1,3 +1,5 @@
+import Color from 'color';
+import { getColorArray } from '../Color';
 import { Engine } from '../Engine';
 import { RenderingPrimitive } from '../gl-types';
 import { Material } from '../Materials/Material';
@@ -20,6 +22,14 @@ export class MeshRenderer extends RendererComponent {
     this._updateProgram()
   }
 
+  private _colorArray = [1, 1, 1, 1]
+  public set color(x: Color) {
+    this._colorArray = getColorArray(x)
+    if (this.programInfo) {
+      this.programInfo.color = this._colorArray
+    }
+  }
+
   public constructor(engine: Engine) {
     super(engine)
   }
@@ -37,10 +47,12 @@ export class MeshRenderer extends RendererComponent {
       uniformLocations: {
         projectionMatrix: tryGetUniformLocation(this._engine, shaderProgram, 'uProjectionMatrix'),
         modelViewMatrix: tryGetUniformLocation(this._engine, shaderProgram, 'uModelViewMatrix'),
+        color: tryGetUniformLocation(this._engine, shaderProgram, 'uColor'),
       },
       vertexCount: this._mesh.vertexCount,
       // drawMode: RenderingPrimitive.TRIANGLE_STRIP,
       drawMode: RenderingPrimitive.LINE_LOOP,
+      color: this._colorArray,
     }
   }
 }

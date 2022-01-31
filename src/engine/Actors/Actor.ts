@@ -51,4 +51,12 @@ export abstract class Actor {
   private setParent(newParent: Actor) {
     this._parent = newParent
   }
+
+  public readonly onCollisionStart = () => {
+
+  }
+
+  public readonly onCollisionEnd = () => {
+
+  }
 }
