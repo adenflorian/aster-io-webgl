@@ -1,8 +1,8 @@
-import { Engine } from '../Engine'
 import { vec, Vector } from '../../excalibur/engine'
+import { RendererComponent } from '../Components/RendererComponent'
+import { Engine } from '../Engine'
 import { Material } from '../Materials/Material'
 import { TransformComponent } from '../Transform'
-import { RendererComponent } from '../Components/RendererComponent'
 
 export abstract class Actor {
   public enabled = true
@@ -22,7 +22,7 @@ export abstract class Actor {
   public get children() { return this._children }
   public renderer?: RendererComponent
 
-  public abstract onUpdate(game: Engine, delta: number): void
+  public onUpdate(game: Engine, delta: number): void { }
 
   public addChild<T extends Actor>(child: T) {
     this._children.push(child)

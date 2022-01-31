@@ -38,7 +38,7 @@ export class LineRenderer extends RendererComponent {
         const x = args[i + 1]
         const y = args[i + 2]
         cursor.x = Number.parseFloat(x)
-        cursor.y = Number.parseFloat(y)
+        cursor.y = -Number.parseFloat(y)
         i += 3
       }
 
@@ -48,7 +48,7 @@ export class LineRenderer extends RendererComponent {
         }
         const x = args[i + 1]
         const y = args[i + 2]
-        positions.push(vec(Number.parseFloat(x), Number.parseFloat(y)))
+        positions.push(vec(Number.parseFloat(x), -Number.parseFloat(y)))
         i += 3
       }
 

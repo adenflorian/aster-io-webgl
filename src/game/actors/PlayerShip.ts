@@ -1,8 +1,6 @@
 import { Actor } from '../../engine/Actors/Actor';
-import { createTriangle } from '../../engine/buffers';
-import { MeshRenderer } from '../../engine/Components/MeshRenderer';
+import { LineRenderer } from '../../engine/Components/LineRenderer';
 import { Engine } from '../../engine/Engine';
-import { TriangleMaterial } from '../../engine/Materials/ShipMaterials';
 import { Keys, vec } from '../../excalibur/engine';
 
 const accel = 2
@@ -15,10 +13,11 @@ export class PlayerShip extends Actor {
 
   public constructor(engine: Engine) {
     super()
-    const meshRenderer = new MeshRenderer(engine)
-    this.renderer = meshRenderer
-    meshRenderer.material = new TriangleMaterial(engine);
-    meshRenderer.mesh = createTriangle(engine, 0.3, 0.5);
+    const lineRenderer = new LineRenderer(engine)
+    lineRenderer.setPath('M -5 7 L 0 -8 L 5 7 M 4 4 L -4 4')
+    this.renderer = lineRenderer
+    const scale = 0.04
+    this.transform.scale = vec(scale, scale)
     this.physics = true
     this.drag = 0.996
     this._thruster = new ShipThruster(engine)
@@ -65,14 +64,9 @@ export class PlayerShip extends Actor {
 class ShipThruster extends Actor {
   public constructor(engine: Engine) {
     super()
-    const meshRenderer = new MeshRenderer(engine)
-    this.renderer = meshRenderer
-    meshRenderer.material = new TriangleMaterial(engine);
-    meshRenderer.mesh = createTriangle(engine, 0.1, 0.5);
-    this.pos = vec(0, -0.23)
-    this.rotation = Math.PI
+    const lineRenderer = new LineRenderer(engine)
+    lineRenderer.setPath('M -1 4 L 0 7 L 1 4')
+    this.renderer = lineRenderer
     this.enabled = false
-  }
-  public readonly onUpdate = (engine: Engine, delta: number) => {
   }
 }
