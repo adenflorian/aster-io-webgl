@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "@types/color": "^3.0.2",
+    "@types/matter-js": "^0.17.7",
     "css-loader": "^6.5.1",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.1",
@@ -20,6 +21,7 @@
   },
   "dependencies": {
     "color": "^4.2.0",
-    "gl-matrix": "^3.4.3"
+    "gl-matrix": "^3.4.3",
+    "matter-js": "^0.18.0"
   }
 }

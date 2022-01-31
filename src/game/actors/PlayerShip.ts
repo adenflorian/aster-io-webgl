@@ -1,4 +1,5 @@
 import { Actor } from '../../engine/Actors/Actor';
+import { BasicPhysics } from '../../engine/Components/BasicPhysics';
 import { LineRenderer } from '../../engine/Components/LineRenderer';
 import { Engine } from '../../engine/Engine';
 import { Keys, vec } from '../../excalibur/engine';
@@ -12,7 +13,7 @@ export class PlayerShip extends Actor {
   private _thruster: ShipThruster
 
   public constructor(engine: Engine) {
-    super()
+    super(engine)
     const lineRenderer = new LineRenderer(engine)
     lineRenderer.setPath('M -5 7 L 0 -8 L 5 7 M 4 4 L -4 4')
     this.renderer = lineRenderer
@@ -22,6 +23,7 @@ export class PlayerShip extends Actor {
     this.drag = 0.996
     this._thruster = new ShipThruster(engine)
     this.addChild(this._thruster)
+    this.body = new BasicPhysics()
   }
   public readonly onUpdate = (engine: Engine, delta: number) => {
     if (engine.input.keyboard.isHeld(Keys.W)) {
@@ -63,7 +65,7 @@ export class PlayerShip extends Actor {
 
 class ShipThruster extends Actor {
   public constructor(engine: Engine) {
-    super()
+    super(engine)
     const lineRenderer = new LineRenderer(engine)
     lineRenderer.setPath('M -1 4 L 0 7 L 1 4')
     this.renderer = lineRenderer

@@ -1,4 +1,5 @@
 import { vec, Vector } from '../../excalibur/engine'
+import { BasicPhysics } from '../Components/BasicPhysics'
 import { RendererComponent } from '../Components/RendererComponent'
 import { Engine } from '../Engine'
 import { Material } from '../Materials/Material'
@@ -21,6 +22,10 @@ export abstract class Actor {
   private _children: Actor[] = []
   public get children() { return this._children }
   public renderer?: RendererComponent
+  public body?: BasicPhysics
+
+  public constructor(protected _engine: Engine) {
+  }
 
   public onUpdate(game: Engine, delta: number): void { }
 

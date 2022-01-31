@@ -1,6 +1,7 @@
 import { Keyboard } from '../excalibur/engine'
 import { Actor } from './Actors/Actor'
 import { clearScene, drawActor } from './draw'
+import { Physics2D } from './Physics2D/Physics2D'
 
 export class Engine {
   public readonly input: EngineInput
@@ -14,6 +15,7 @@ export class Engine {
   private readonly _actors = [] as Actor[]
   private readonly _gl: WebGL2RenderingContext
   private _lastTimestamp: DOMHighResTimeStamp = 0
+  private readonly _physics2D = new Physics2D();
 
   public constructor(
     private readonly _canvas: HTMLCanvasElement,
@@ -28,6 +30,9 @@ export class Engine {
 
   public readonly add = (actor: Actor) => {
     this._actors.push(actor)
+    if (actor.body) {
+      this._physics2D.add(actor)
+    }
   }
 
   public readonly start = () => {
@@ -47,6 +52,7 @@ export class Engine {
     for (const actor of this._actors) {
       this.updateActor(actor, delta)
     }
+    this._physics2D.update(delta)
   }
 
   private readonly updateActor = (actor: Actor, delta: number) => {
