@@ -1,5 +1,5 @@
 import { Component } from './Component';
 
-export class BasicPhysics extends Component {
+export abstract class Collider2D extends Component {
 
 }

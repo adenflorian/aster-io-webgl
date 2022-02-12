@@ -74,9 +74,7 @@ function setUniforms(engine: Engine, transform: Transform, programInfo: ShaderPr
 
   mat4.identity(modelViewMatrix)
 
-  mat4.translate(modelViewMatrix,     // destination matrix
-    modelViewMatrix,     // matrix to translate
-    [transform.pos.x, transform.pos.y, -6.0])  // amount to translate
+  mat4.translate(modelViewMatrix, modelViewMatrix, [transform.pos.x, transform.pos.y, 0.0])
   mat4.rotateZ(modelViewMatrix, modelViewMatrix, transform.rotation)
   mat4.scale(modelViewMatrix, modelViewMatrix, [transform.scale.x, transform.scale.y, 1])
 

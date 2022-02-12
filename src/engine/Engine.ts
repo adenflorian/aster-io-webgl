@@ -11,11 +11,13 @@ export class Engine {
   public get aspectRatio() { return this.canvasWidth / this.canvasHeight }
   public get orthoWidth() { return this.aspectRatio * this.orthographicCameraSize }
   public get orthoHeight() { return this.orthographicCameraSize }
-  public orthographicCameraSize = 6
+  public orthographicCameraSize = 100
   private readonly _actors = [] as Actor[]
   private readonly _gl: WebGL2RenderingContext
   private _lastTimestamp: DOMHighResTimeStamp = 0
-  private readonly _physics2D = new Physics2D();
+  private readonly _physics2D: Physics2D;
+
+  private readonly myData: HTMLDivElement = document.getElementById('myData')! as HTMLDivElement
 
   public constructor(
     private readonly _canvas: HTMLCanvasElement,
@@ -26,12 +28,13 @@ export class Engine {
       keyboard: new Keyboard()
     }
     this.input.keyboard.init()
+    this._physics2D = new Physics2D(this);
   }
 
   public readonly add = (actor: Actor) => {
     this._actors.push(actor)
-    if (actor.body) {
-      this._physics2D.add(actor)
+    if (actor.collider) {
+      this._physics2D.add(actor, actor.collider)
     }
   }
 
@@ -49,10 +52,10 @@ export class Engine {
 
   public readonly update = (delta: number) => {
     clearScene(this._gl)
+    this._physics2D.update(delta)
     for (const actor of this._actors) {
       this.updateActor(actor, delta)
     }
-    this._physics2D.update(delta)
   }
 
   private readonly updateActor = (actor: Actor, delta: number) => {
@@ -60,6 +63,7 @@ export class Engine {
     actor.onUpdate(this, delta)
     actor.onPhysicsUpdate(this, delta)
     if (actor.renderer && actor.renderer.programInfo) {
+      this.myData.textContent = 'my data: ' + JSON.stringify({ x: actor.pos.x.toFixed(2), y: actor.pos.y.toFixed(2), angle: actor.rotation.toFixed(2) })
       drawActor(this, actor.transform.getGlobalTransform(), actor.renderer.programInfo)
     }
     for (const child of actor.children) {

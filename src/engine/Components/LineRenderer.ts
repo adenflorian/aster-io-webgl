@@ -25,6 +25,8 @@ export class LineRenderer extends RendererComponent {
     }
   }
 
+  public get vertices() { return this._mesh.vertices }
+
   public constructor(engine: Engine) {
     super(engine)
     this._mesh = new Mesh(engine)

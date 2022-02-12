@@ -1,12 +1,12 @@
 import { Actor } from '../../engine/Actors/Actor';
-import { BasicPhysics } from '../../engine/Components/BasicPhysics';
 import { LineRenderer } from '../../engine/Components/LineRenderer';
+import { PolygonCollider2D } from '../../engine/Components/PolygonCollider';
 import { Engine } from '../../engine/Engine';
 import { Keys, vec } from '../../excalibur/engine';
 
-const accel = 2
+const accel = 20
 const rotateSpeed = 3
-const maxVel = 4
+const maxVel = 40
 const orthoEdgeOffset = 1.13
 
 export class PlayerShip extends Actor {
@@ -15,15 +15,16 @@ export class PlayerShip extends Actor {
   public constructor(engine: Engine) {
     super(engine)
     const lineRenderer = new LineRenderer(engine)
-    lineRenderer.setPath('M -5 7 L 0 -8 L 5 7 M 4 4 L -4 4')
+    // lineRenderer.setPath('M -5 7 L 0 -8 L 5 7 M 4 4 L -4 4')
+    lineRenderer.setPath('M -5 7 L 0 -8 L 5 7')
     this.renderer = lineRenderer
-    const scale = 0.04
+    const scale = 1
     this.transform.scale = vec(scale, scale)
     this.physics = true
     this.drag = 0.996
     this._thruster = new ShipThruster(engine)
-    this.addChild(this._thruster)
-    this.body = new BasicPhysics()
+    // this.addChild(this._thruster)
+    this.collider = new PolygonCollider2D(lineRenderer.vertices)
   }
   public readonly onUpdate = (engine: Engine, delta: number) => {
     if (engine.input.keyboard.isHeld(Keys.W)) {

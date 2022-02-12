@@ -8,6 +8,7 @@ export class Mesh {
   public get vertexCount() { return this._positions.length }
   private readonly _positionsBuffer: WebGLBuffer
   private readonly _colorsBuffer: WebGLBuffer
+  public get vertices() { return this._positions }
 
   public constructor(
     engine: Engine,

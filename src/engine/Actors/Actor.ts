@@ -1,5 +1,5 @@
 import { vec, Vector } from '../../excalibur/engine'
-import { BasicPhysics } from '../Components/BasicPhysics'
+import { Collider2D } from '../Components/BasicPhysics'
 import { RendererComponent } from '../Components/RendererComponent'
 import { Engine } from '../Engine'
 import { Material } from '../Materials/Material'
@@ -10,6 +10,7 @@ export abstract class Actor {
   public vel = vec()
   public get pos() { return this.transform.pos }
   public set pos(val: Vector) { this.transform.pos = val }
+  /** Rotation in radians. */
   public get rotation() { return this.transform.rotation }
   public set rotation(val: number) { this.transform.rotation = val }
   private _transform = new TransformComponent(this)
@@ -22,7 +23,7 @@ export abstract class Actor {
   private _children: Actor[] = []
   public get children() { return this._children }
   public renderer?: RendererComponent
-  public body?: BasicPhysics
+  public collider?: Collider2D
 
   public constructor(protected _engine: Engine) {
   }

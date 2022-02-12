@@ -1,6 +1,7 @@
 - [√] orthographic camera
 - [√] teleport ship to other side
 - [√] make floating cube an asteroid
+- [ ] "mesh" collider for asteroids and ship
 - [ ] spawn asteroids
 - [ ] score display
 - [ ] ufo
